@@ -3,7 +3,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import User, db
+from models import User, db,Chats
 
 auth = Blueprint('auth', __name__)
 
@@ -56,8 +56,10 @@ def signup_post():
     # add the new user to the database
     db.add(new_user)
     db.commit()
-
-    # code to validate and add user to database goes here
+    user = db.query(User).filter_by(email=email).first()
+    new_chat = Chats(frm = user.id,to = user.id)
+    db.add(new_chat)
+    db.commit()
     return redirect(url_for('auth.login'))
 
 
