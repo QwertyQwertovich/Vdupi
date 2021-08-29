@@ -1,0 +1,25 @@
+<!-- templates/index.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-4 is-offset-4">
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+      <div class="notification is-success">
+          {{ messages[0] }}
+      </div>
+</div>
+  {% endif %}
+  {% endwith %}
+{% if ln>=1 %}<a class="button is-warning is-outlined is-large is-fullwidth is-rounded" href="/messager/{{rt[0]}}">{{names[0]}}</a>{% endif %}
+{% if ln>=2 %}<a class="button is-warning is-outlined is-large is-fullwidth is-rounded" href="/messager/{{rt[1]}}">{{names[1]}}</a>{% endif %}
+{% if ln>=3 %}<a class="button is-warning is-outlined is-large is-fullwidth is-rounded" href="/messager/{{rt[2]}}">{{names[2]}}</a>{% endif %}
+{% if ln>=4 %}<a class="button is-warning is-outlined is-large is-fullwidth is-rounded" href="/messager/{{rt[3]}}">{{names[3]}}</a>{% endif %}
+{% if ln>=5 %}<a class="button is-warning is-outlined is-large is-fullwidth is-rounded" href="/messager/{{rt[4]}}">{{names[4]}}</a>{% endif %}
+{% if ln>=6 %}<a class="button is-warning is-outlined is-large is-fullwidth is-rounded" href="/messager/{{rt[5]}}">{{names[5]}}</a>{% endif %}
+{% if ln>=7 %}<a class="button is-warning is-outlined is-large is-fullwidth is-rounded" href="/messager/{{rt[6]}}">{{names[6]}}</a>{% endif %}
+{% if ln>=8 %}<a class="button is-warning is-outlined is-large is-fullwidth is-rounded" href="/messager/{{rt[7]}}">{{names[7]}}</a>{% endif %}
+{% if ln>=9 %}<a class="button is-warning is-outlined is-large is-fullwidth is-rounded" href="/messager/{{rt[8]}}">{{names[8]}}</a>{% endif %}
+{% if ln>=10 %}<a class="button is-warning is-outlined is-large is-fullwidth is-rounded" href="/messager/{{rt[9]}}">{{names[9]}}</a>{% endif %}
+{% endblock %}
