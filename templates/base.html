@@ -12,9 +12,9 @@
     <script>
         onload = function () {setTimeout ('location.reload (true)', 30000)}
     </script>
-</head>
-{% block top %}
+    {% block top %}
 {% endblock %}
+</head>
 <body>
     <section class="hero is-primary is-fullheight">
 
@@ -59,6 +59,12 @@
                {% endblock %}
             </div>
         </div>
+            <div class="hero-foot">
+                <div class="container has-text-centered">
+                    {% block foot %}
+                    {% endblock %}
+                </div>
+            </div>
         </div>
 
     </section>
