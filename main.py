@@ -39,11 +39,7 @@ def profile():
                 flash('Photo should have 1:1 ratio')
         except Exception as e:
             flash('Error: '+str(e))
-        try:
-            img = vk.method("photos.getById", {"photos":models.db.query(models.User).filter_by(id=current_user.id).first().photo})[0]['sizes'][-1]['url']
-        except:
-            img='https://sun9-49.userapi.com/impg/BZYeU9FNE98iPqctPNL8FX7EwxyaajS6PaYaXA/dkCGd23VNKQ.jpg?size=256x256&quality=96&sign=a31256d23fe76d7f750af50eaefaab60&c_uniq_tag=03KAYcv7yvO3-bVDwzRvdjWdpNr6u_864F6oFlXb20k&type=album'
-        return render_template('profile.html', name=current_user.name, mail=current_user.email, img=img, id=current_user.id)
+        return redirect('profile')
     else:
         try:
             img = vk.method("photos.getById",
@@ -129,4 +125,4 @@ def chat_load(fr_id):
             is_sticker = i.is_sticker
             text = i.text
             msg.append([color, ava, name, text])
-    return render_template('messager.html', name=current_user.name, mail=current_user.email, id=current_user.id, msg=msg, ln=min(20, len(msg)))
+    return render_template('messager.html', name=current_user.name, mail=current_user.email, id=current_user.id, msg=msg, ln=min(20, len(msg)), name2=models.db.query(models.User).filter_by(id=fr_id).first().name)

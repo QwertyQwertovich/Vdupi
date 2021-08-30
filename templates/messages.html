@@ -2,6 +2,10 @@
 
 {% extends "base.html" %}
 
+{% block title %}
+<title>Chats - Vdupi</title>
+{% endblock %}
+
 {% block content %}
 <div class="column is-4 is-offset-4">
   {% with messages = get_flashed_messages() %}
@@ -19,7 +23,7 @@
 {%endfor%}
 <form method="post" enctype="multipart/form-data">
     <textarea type="textarea" name="textarea" id="textarea" required placeholder="user id " rows="2" style="width:75%" ></textarea>
-    <input class="button is-info " type="submit" value="Write"><br>
+    <button class="button is-info " type="submit" value="Write"><img src="static/images/send.jpg" width="32" height="32"></button>
 </form>
 {% endblock %}
 

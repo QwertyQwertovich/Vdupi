@@ -2,6 +2,10 @@
 
 {% extends "base.html" %}
 
+{% block title %}
+<title>Vdupi Social Network</title>
+{% endblock %}
+
 {% block content %}
 <div class="column is-4 is-offset-4">
   {% with messages = get_flashed_messages() %}
@@ -13,9 +17,10 @@
   {% endwith %}
 </div>
 <h1 class="title">
-  Flask Login Example
+  Vdupi Social network
 </h1>
-<h2 class="subtitle">
-  Easy authentication and authorization in Flask.
-</h2>
+<img src="/static/images/vdupi_promo.jpg" style="width:50%"> </img>
+{% endblock %}
+{% block foot %}
+<a class="button is-success" href="/static/files/1.3/com.ukraine.vdupi.apk" >Download Android App (v1.3)</a>
 {% endblock %}
