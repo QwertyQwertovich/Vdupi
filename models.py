@@ -15,6 +15,7 @@ class User(UserMixin, db.Model):
     reg_date = db.Column(db.DateTime, default=datetime.utcnow())
     desc = db.Column(db.Text,default='Description')
     is_banned = db.Column(db.Integer,default=0)
+    api_key = db.Column(db.String(128),default="")
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy

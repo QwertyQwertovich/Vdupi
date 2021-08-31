@@ -4,6 +4,8 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import User, db,Chats
+import string
+import random
 
 auth = Blueprint('auth', __name__)
 
@@ -52,7 +54,7 @@ def signup_post():
         return redirect(url_for('auth.signup'))
 
     # create new user with the form data. Hash the password so plaintext version isn't saved.
-    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
+    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'), api_key="".join([random.choice(string.hexdigits[:16]) for x in range(128)]))
 
     # add the new user to the database
     db.add(new_user)

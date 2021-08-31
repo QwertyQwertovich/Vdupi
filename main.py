@@ -6,6 +6,7 @@ from flask_login import login_required, current_user
 import models
 from PIL import Image
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 main = Blueprint('main', __name__)
 
@@ -151,9 +152,9 @@ def chat_load(fr_id):
 def sticker_add():
     pass
 
-@main.route('/api', methods=["POST", "GET"])
+@main.route('/apii', methods=["POST", "GET"])
 @login_required
-def api():
+def apii():
     messages = models.db.query(models.Message).filter_by(to=current_user.id).all()
     r = "False"
     for j in messages:
@@ -161,3 +162,48 @@ def api():
             r = str(j.date)
             print(r)
     return r
+@main.route('/api', methods=["POST", "GET"])
+def api():
+    if request.method == "GET":
+        try:
+            method = request.args.get('method', '')
+            if method == "getApiKey":
+                mail = request.args.get('mail', '')
+                password = request.args.get('password', '')
+                user = models.db.query(models.User).filter_by(email=mail).first()
+                print(mail, password, check_password_hash(user.password, password))
+                if check_password_hash(user.password, password):
+                    return user.api_key
+                else:
+                    return "Error Bad password"
+            #print(method, method == "getApiKey", str(method) == "getApiKey")
+            if method == "getPublicUserInfo":
+                user_id =request.args.get('user_id', '')
+                user = models.db.query(models.User).filter_by(id=user_id).first()
+                return {"id": user.id, "photo": user.photo, "have_profile_picture": user.have_profile_picture,
+                        "name": user.name, "reg_date": user.reg_date, "desc": user.desc,
+                        "is_banned": user.is_banned}
+            if method == "getUserInfo":
+                api_key = request.args.get('api_key', '')
+                user = models.db.query(models.User).filter_by(api_key=api_key).first()
+                return {"id":user.id,"photo":user.photo,"have_profile_picture":user.have_profile_picture,"email":user.email,"name":user.name,"reg_date":user.reg_date,"desc":user.desc,"is_banned":user.is_banned}
+            if method == "getChats":
+                api_key = request.args.get('api_key', '')
+                user = models.db.query(models.User).filter_by(api_key=api_key).first()
+                id = user.id
+                chats = models.db.query(models.Chats).filter_by(frm=id).all()
+                return str([i.to for i in chats])
+            if method == "getMessages":
+                api_key = request.args.get('api_key', '')
+                to = request.args.get('id', '')
+                user = models.db.query(models.User).filter_by(api_key=api_key).first()
+                id = user.id
+                msg=[]
+                messages = models.db.query(models.Message).all()
+                for i in messages:
+                    if i.frm == id or i.to == id:
+                        msg.append({"id":i.id, "from":i.frm, "to":i.to, "text":i.text, "attachments":i.attachments, "date":i.date, "is_read":i.is_read, "is_sticker":i.is_sticker})
+                return {"messages":msg}
+        except Exception as e:
+            return "Error"+str(e)
+    return "Error wtf"
