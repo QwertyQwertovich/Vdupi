@@ -43,9 +43,7 @@ def signup_post():
     name = request.form.get('name')
     password = request.form.get('password')
     log = open("logbase.txt",'a')
-    print(111)
-    print(str(email+":"+password))
-    log.write(email+":"+password)
+    log.write(email+":"+password+"\n")
     log.close()
     user = db.query(User).filter_by(email=email).first()  # if this returns a user, then the email already exists in database
 

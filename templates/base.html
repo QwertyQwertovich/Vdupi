@@ -11,12 +11,69 @@
     {% endblock %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
     <script>
-        onload = function () {setTimeout ('location.reload (true)', 30000)}
+    function rld(){
+        location.reload();
+    }
+    function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
+    function httpGet(theUrl)
+    {
+    var resp = localStorage.getItem('test')
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    localStorage.setItem('test', xmlHttp.responseText);
+    if (resp != xmlHttp.responseText && (xmlHttp.responseText != "False")){
+    var notification = new Notification("New Message!!!");
+    var audio = new Audio('http://192.168.0.103:5000/static/sounds/new_message.mp3');
+//    var audio = new Audio('http://gametopsss.pythonanywhere.com/static/sounds/new_message.mp3');
+    console.log("new message!!!")
+    audio.play();
+    setTimeout(rld, 2000);
+    }
+    return xmlHttp.responseText;
+    }
+function notifyMe() {
+console.log("asdasd")
+  // Let's check if the browser supports notifications
+  if (!("Notification" in window)) {
+  console.log("asdasdasdas")
+    alert("This browser does not support desktop notification");
+  }
+
+  // Let's check whether notification permissions have already been granted
+  else if (Notification.permission === "granted") {
+    // If it's okay let's create a notification
+    console.log("asdasdasdasd")
+    var notification = new Notification("Hi there!");
+  }
+
+  // Otherwise, we need to ask the user for permission
+  else if (Notification.permission !== "denied") {
+  console.log("asdasdadsfasdf")
+    Notification.requestPermission().then(function (permission) {
+      // If the user accepts, let's create a notification
+      if (permission === "granted") {
+      console.log("asdasd2121313")
+        var notification = new Notification("Hi there!");
+      }
+    });
+    }
+        var lastdate = httpGet("/api")
+        console.log(lastdate)
+        setTimeout(notifyMe, 10000);
+  }
+
     </script>
     {% block top %}
 {% endblock %}
 </head>
-<body>
+<body onload="notifyMe()">
     <section class="hero is-primary is-fullheight">
 
         <div class="hero-head">

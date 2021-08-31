@@ -17,9 +17,10 @@
   {% endif %}
   {% endwith %}
 {%for i in range(0, ln)%}
-<a class="button is-warning is-outlined is-large is-fullwidth is-rounded" href="/messager/{{rt[i]}}">
-    <img style="border-radius:50%" width="32" height="32" src={{img[i]}}></img>{{names[i]}}
+<a class="button {{colors[i]}} is-large is-fullwidth is-rounded" href="/messager/{{rt[i]}}">
+    <img style="border-radius:50%" width="32" height="32" src={{img[i]}}>{{names[i]}}
 </a>
+<br>
 {%endfor%}
 <form method="post" enctype="multipart/form-data">
     <textarea type="textarea" name="textarea" id="textarea" required placeholder="user id " rows="2" style="width:75%" ></textarea>
