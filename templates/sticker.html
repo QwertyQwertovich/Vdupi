@@ -1,0 +1,35 @@
+<!-- templates/index.html -->
+
+{% extends "base.html" %}
+
+{% block title %}
+<title>{{name2}} Sticker - Vdupi</title>
+{% endblock %}
+
+{% block top %}
+{% endblock %}
+{% block content %}
+<div class="column is-4 is-offset-4">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="notification is-success">
+        {{ messages[0] }}
+    </div>
+</div>
+{% endif %}
+{% endwith %}
+{%for i in range(0, ln)%}
+{% if is_pack_selector==0 %}
+<a href="../../messager/{{fr_id}}?sticker={{st[i]["id"]}}"><img width="128" height="128" src={{st[i]["path"]}}></a>
+{% endif %}
+
+{% if is_pack_selector==1 %}
+<a href="{{st[i]["href"]}}"><img width="128" height="128" src={{st[i]["path"]}}></a>
+{% endif %}
+
+{%endfor%}
+
+{% endblock %}
+
+{% block foot %}
+{% endblock %}

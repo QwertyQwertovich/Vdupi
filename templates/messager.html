@@ -7,35 +7,54 @@
 {% endblock %}
 
 {% block top %}
-    <script>
-        onload = function () {setTimeout ('location.reload (true)', 30000)}
-    </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+    function rld(){
+    console.log(document.getElementById('name1'))
+document.getElementById('name')
+.addEventListener('keyup', function(event) {
+    if (event.code === 'Enter') {
+      event.preventDefault();
+      console.log(123)
+      document.querySelector('form').submit();
+    }
+  });};
+    setTimeout(rld, 1000);
+
+</script>
 {% endblock %}
 {% block content %}
 <div class="column is-4 is-offset-4">
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-      <div class="notification is-success">
-          {{ messages[0] }}
-      </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="notification is-success">
+        {{ messages[0] }}
+    </div>
 </div>
-  {% endif %}
-  {% endwith %}
+{% endif %}
+{% endwith %}
 {%for i in range(0, ln)%}
-<article class="message is-small {{msg[i][0]}}" >
-  <div class="message-header" >
-      <img style="border-radius:50%" width="32" height="32" src={{msg[i][1]}}>
-    <p>{{msg[i][2]}}</p>
-  </div>
-  <div class="message-body">
-      {{msg[i][3]}}
-  </div>
+<article class="message is-small {{msg[i][0]}}">
+    <div class="message-header">
+        <img style="border-radius:50%" width="32" height="32" src={{msg[i][1]}}>
+        <p>{{msg[i][2]}}</p>
+    </div>
+    <div class="message-body">
+        {% if msg[i][4]!='' %}
+        <img width="256" height="256" src={{msg[i][4]}}>
+        {% endif %}
+        {{msg[i][3]}}
+    </div>
 </article>
 {%endfor%}
 <form method="post" enctype="multipart/form-data">
-    <textarea type="textarea" name="textarea" id="textarea" placeholder="e.g. Hello world" rows="2" style="width:65%" required ></textarea>
-    <button class="button is-info " type="submit" value="Send"><img src="../../static/images/send.jpg" width="32" height="32"></button>
-    <button class="button is-info is-small" value="Attach"><img src="../../static/images/sticker.png" width="16" height="16"></button>
+    <input name="textarea" id="textarea" placeholder="e.g. Hello world" style="width:65%"
+              required>
+    <button class="button is-info " type="submit" id="name" name="name" value="Send"><img
+            src="../../static/images/send.jpg" width="32" height="32"></button>
+    <a class="button is-info is-small" value="Attach" href="/sticker/{{id2}}"><img src="../../static/images/sticker.png" width="16"
+                                                                height="16"></a>
 </form>
 {% endblock %}
 
